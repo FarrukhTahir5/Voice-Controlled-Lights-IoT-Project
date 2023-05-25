@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script>
+    function sendCharacter(character) {
+      $.ajax({
+        url: "https://example.com/receive-character", // Replace with the URL of the second website
+        method: "POST",
+        data: { character: character },
+        success: function(response) {
+          console.log("Character transmitted successfully: " + response);
+        },
+        error: function(error) {
+          console.log("Error transmitting character: " + error);
+        }
+      });
+    }
+
+    function convertSpeechToText() {
+      const speechRecognition = new webkitSpeechRecognition(); // Using webkitSpeechRecognition for Chrome compatibility
+      speechRecognition.continuous = false;
+      speechRecognition.lang = 'en-US';
+
+      speechRecognition.onresult = function(event) {
+        const result = event.results[0][0].transcript.trim().toLowerCase();
+        console.log(result);
+        if (result === "turn on light") {
+          sendCharacter("a");
+        } else if (result === "turn off light") {
+          sendCharacter("b");
+        }
+      };
+
+      speechRecognition.onerror = function(event) {
+        console.log('Error occurred during speech recognition: ' + event.error);
+      };
+
+      speechRecognition.start();
+    }
+  </script>
+</head>
+<body>
+  <button onclick="convertSpeechToText()">Convert Voice to Text</button>
+</body>
+</html>

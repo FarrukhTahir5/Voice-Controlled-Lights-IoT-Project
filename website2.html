@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $.ajax({
+        url: "https://example.com/receive-character", // Replace with the URL of the server-side script to handle character reception
+        method: "GET",
+        success: function(response) {
+          console.log("Received character: " + response);
+        },
+        error: function(error) {
+          console.log("Error receiving character: " + error);
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>Second Website - Character Receiver</h1>
+</body>
+</html>
