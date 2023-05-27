@@ -4,19 +4,6 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <script>
-    function sendCharacter(character) {
-      $.ajax({
-        url: "http://192.168.18.80/", // Replace with the URL of the second website
-        method: "POST",
-        data: { character: character },
-        success: function(response) {
-          console.log("Character transmitted successfully: " + response);
-        },
-        error: function(error) {
-          console.log("Error transmitting character: " + error);
-        }
-      });
-    }
 
     function convertSpeechToText() {
       const speechRecognition = new webkitSpeechRecognition(); // Using webkitSpeechRecognition for Chrome compatibility
@@ -27,9 +14,14 @@
         const result = event.results[0][0].transcript.trim().toLowerCase();
         console.log(result);
         if (result === "turn on light") {
-          sendCharacter("a");
+          //visit query 1
+          console.log("light on registered");
+          window.location.assign("http://192.168.202.196/1");
+
         } else if (result === "turn off light") {
-          sendCharacter("b");
+          console.log("light off registered");
+          //visit query 2
+          window.location.assign("http://192.168.202.196/1");
         }
       };
 
