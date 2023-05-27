@@ -16,15 +16,20 @@
         if (result === "turn on light") {
           //visit query 1
           console.log("light on registered");
-          window.location.assign("http://192.168.202.196/1");
-          window.location.assign("https://iotvoice.netlify.app/");
+          var xhr = new XMLHttpRequest();
+xhr.open("GET", "http://192.168.202.196/1", true);
+xhr.send();
+
+          // window.location.assign("http://192.168.202.196/1");
           
 
         } else if (result === "turn off light") {
           console.log("light off registered");
           //visit query 2
-          window.location.assign("http://192.168.202.196/2");
-          window.location.assign("https://iotvoice.netlify.app/");
+          var xhr = new XMLHttpRequest();
+xhr.open("GET", "http://192.168.202.196/2", true);
+xhr.send();
+          // window.location.assign("http://192.168.202.196/2");
 
         }
       };
