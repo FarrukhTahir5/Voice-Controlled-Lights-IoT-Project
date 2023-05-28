@@ -94,7 +94,7 @@ bool ledstatus;
 void loop() {
   server.handleClient();
   if(wificonnect){
-  fireStatus = Firebase.getBool("light1");
+  fireStatus = Firebase.getBool("light1/light1");
   
 if (fireStatus == 1 && ledstatus==0) 
   {                                                          // compare the input of led status received from firebase

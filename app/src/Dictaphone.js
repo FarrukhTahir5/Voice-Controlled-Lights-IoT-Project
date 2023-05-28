@@ -19,14 +19,14 @@ const db = getDatabase(apip);
 
 const turnLightOn = () => {
   // Update the value of /light1 to true
-  set(ref(db, '/light1'), {
+  set(ref(db, 'light1'), {
     light1: true,
   });
 }
 
 const turnLightOff = () => {
   // Update the value of /light1 to false
-  set(ref(db, '/light1'), {
+  set(ref(db, 'light1'), {
     light1: false,
   });
 }
