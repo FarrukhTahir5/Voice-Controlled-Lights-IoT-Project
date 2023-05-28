@@ -18,6 +18,7 @@
         const result = event.results[0][0].transcript.trim().toLowerCase();
         console.log(result);
         if (result === "turn on light") {
+          console.log("light on registered");
           //visit query 1
           turnLightOn();
 
