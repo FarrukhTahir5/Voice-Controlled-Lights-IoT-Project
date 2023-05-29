@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="stylesheet" href="https://unpkg.com/wavesurfer.js@2.1.0/dist/wavesurfer.min.css" />
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -26,6 +27,18 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <script src="../node_modules/video.js/dist/video.min.js"></script>
+  <script src="../node_modules/recordrtc/RecordRTC.js"></script>
+  <script src="../node_modules/webrtc-adapter/out/adapter.js"></script>
+  <script src="../node_modules/wavesurfer.js/dist/wavesurfer.min.js"></script>
+  <script src="../node_modules/wavesurfer.js/dist/plugin/wavesurfer.microphone.min.js"></script>
+  <script src="../node_modules/videojs-wavesurfer/dist/videojs.wavesurfer.min.js"></script>
+  <script src="https://unpkg.com/wavesurfer.js@beta/dist/plugin/wavesurfer.record.js"></script>
+
+
+  <script src="../dist/videojs.record.js"></script>
+
+  <script src="browser-workarounds.js"></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -40,5 +53,8 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script src="https://unpkg.com/wavesurfer.js@2.1.0/dist/wavesurfer.min.js"></script>
+    <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.record.min.js"></script>
+    <script src="your-bundle-file.js"></script>
   </body>
 </html>
