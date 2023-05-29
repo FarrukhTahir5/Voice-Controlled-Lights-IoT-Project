@@ -54,10 +54,13 @@ const turnLightOff = () => {
     light1: false,
   });
 };
+
 const Dictaphone = () => {
   const analyserCanvas = React.useRef(null);
   const [showAsd, setShowAsd] = useState(false);
   const [audioData, setAudioData] = useState(null);
+  const [showTranscript, setShowTranscript] = useState(false);
+  const [transcriptTimer, setTranscriptTimer] = useState(null);
   const {
     transcript,
     listening,
@@ -75,7 +78,21 @@ const Dictaphone = () => {
       turnLightOff();
       SpeechRecognition.stopListening();
     }
-  }, [transcript]);
+
+    // Reset transcript timer whenever the listening state changes
+    clearTimeout(transcriptTimer);
+    if (!listening && transcript !== '') {
+      setTranscriptTimer(
+        setTimeout(() => {
+          resetTranscript();
+          setShowTranscript(false);
+        }, 1000)
+      );
+    }
+
+    // Show transcript if not empty
+    setShowTranscript(transcript !== '');
+  }, [transcript, resetTranscript, listening]);
 
   const handleMicClick = () => {
     setShowAsd(true);
@@ -110,7 +127,6 @@ const Dictaphone = () => {
         console.error('Error accessing microphone:', error);
       });
   };
-
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
   }
@@ -120,9 +136,9 @@ const Dictaphone = () => {
       {listening ? (
         <>
           <div className='flex justify-center flex-col items-center mt-40'>
-          <canvas ref={analyserCanvas} className=""></canvas>
+            <canvas ref={analyserCanvas} className=''></canvas>
           </div>
-          <div>{transcript}</div>
+          {showTranscript && <div>{transcript}</div>}
         </>
       ) : (
         <div
@@ -144,7 +160,9 @@ const Dictaphone = () => {
           ))}
         </div>
       )}
-      <div className='text-white font-light text-5xl mt-10'>Light Status: Off</div>
+      <div className='text-white font-light text-5xl mt-10'>
+        Light Status: Off
+      </div>
     </div>
   );
 };
