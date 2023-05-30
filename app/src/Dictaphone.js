@@ -3,30 +3,9 @@ import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database';
 import micLogo from './microphone.svg';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-
-
-const audioTest = async () => {
-if (navigator.mediaDevices.getUserMedia !== null) {
-    const options = {
-      video: false,
-      audio: true,
-    };
-     try {
-        const stream = await navigator.mediaDevices.getUserMedia(options);        
-        const audioCtx = new AudioContext(); 
-        const analyser = audioCtx.createAnalyser();
-        analyser.fftSize = 2048;       
-        const audioSrc = audioCtx.createMediaStreamSource(stream);
-        audioSrc.connect(analyser);
-        const data = new Uint8Array(analyser.frequencyBinCount);
-
-
-
-     }catch (err) {
-      // error handling
-      }
-}
-}
+import AudioVisualizer from './AudioVisualizer';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/database';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBmoCJJ-H4YkOMnb7J-L_UNX4M3jxCh9-M",
@@ -38,8 +17,13 @@ const firebaseConfig = {
   appId: "1:926892985236:web:d9f3251476d3691f4f9d81",
   measurementId: "G-WET4YBE9T3"
 };
+
+
+
+
 const apip = initializeApp(firebaseConfig);
 const db = getDatabase(apip);
+
 
 const turnLightOn = () => {
   // Update the value of /light1 to true
@@ -55,12 +39,13 @@ const turnLightOff = () => {
   });
 };
 
+
 const Dictaphone = () => {
-  const analyserCanvas = React.useRef(null);
   const [showAsd, setShowAsd] = useState(false);
   const [audioData, setAudioData] = useState(null);
   const [showTranscript, setShowTranscript] = useState(false);
   const [transcriptTimer, setTranscriptTimer] = useState(null);
+  const [lightStatus, setLightStatus] = useState(false);
   const {
     transcript,
     listening,
@@ -79,6 +64,7 @@ const Dictaphone = () => {
       SpeechRecognition.stopListening();
     }
 
+
     // Reset transcript timer whenever the listening state changes
     clearTimeout(transcriptTimer);
     if (!listening && transcript !== '') {
@@ -89,10 +75,23 @@ const Dictaphone = () => {
         }, 1000)
       );
     }
-
+    firebase.initializeApp(firebaseConfig);
     // Show transcript if not empty
     setShowTranscript(transcript !== '');
-  }, [transcript, resetTranscript, listening]);
+  }, [transcript, resetTranscript, listening,transcriptTimer]);
+useEffect(() => {
+    // Create a Firebase database reference
+    const databaseRef = firebase.database().ref('light1/light1');
+
+    // Listen for changes in the database value
+    databaseRef.on('value', (snapshot) => {
+      const lightValue = snapshot.val();
+      setLightStatus(lightValue);
+    });
+    return () => {
+      databaseRef.off();
+    };
+  }, []);
 
   const handleMicClick = () => {
     setShowAsd(true);
@@ -136,32 +135,20 @@ const Dictaphone = () => {
       {listening ? (
         <>
           <div className='flex justify-center flex-col items-center mt-40'>
-            <canvas ref={analyserCanvas} className=''></canvas>
+            <AudioVisualizer/>
           </div>
-          {showTranscript && <div>{transcript}</div>}
+          <div className='h-16 mt-0'>{showTranscript && <div className='text-white font-light text-xl'>{transcript}</div>}</div>
         </>
       ) : (
         <div
           onClick={handleMicClick}
-          className='flex justify-center flex-col items-center mt-40 w-44 p-2 border rounded-full border-none bg-micg ml-auto mr-auto'
+          className='flex justify-center flex-col items-center mt-40  mb-24 w-44 p-2 border rounded-full border-none bg-micg ml-auto mr-auto'
         >
           <img className='w-44' src={micLogo} alt='Microphone' />
         </div>
       )}
-
-      {showAsd && listening && audioData && (
-        <div className='sound-wave-container'>
-          {audioData.map((value, index) => (
-            <div
-              key={index}
-              className='sound-wave-bar'
-              style={{ height: `${value}px` }}
-            ></div>
-          ))}
-        </div>
-      )}
-      <div className='text-white font-light text-5xl mt-10'>
-        Light Status: Off
+      <div className='text-white font-light text-5xl'>
+        Light Status: {lightStatus ? 'On' : 'Off'}
       </div>
     </div>
   );

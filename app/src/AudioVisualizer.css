@@ -1,0 +1,33 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  body, main {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+  
+ 
+  
+  main {
+    
+    > div {
+      display: inline-block;
+      width: 8px;
+      height: 200px;
+      margin: 0 7px;
+      background: white;
+      transform: scaleY( .5 );
+      opacity: .25;
+    }
+    
+    &.error {
+      color: #f7451d;
+      min-width: 20em;
+      max-width: 30em;
+      margin: 0 auto;
+      white-space: pre-line;
+    }
+  }
+  
