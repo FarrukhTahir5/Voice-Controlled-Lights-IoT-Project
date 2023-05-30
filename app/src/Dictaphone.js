@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database';
-import micLogo from './microphone.svg';
+import micLogo from './microphone.png';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import AudioVisualizer from './AudioVisualizer';
 import firebase from 'firebase/compat/app';
@@ -54,11 +54,11 @@ const Dictaphone = () => {
   } = useSpeechRecognition();
 
   useEffect(() => {
-    if (transcript === 'turn on light') {
+    if (transcript === 'turn on light'||transcript === 'turn light on') {
       console.log('light on registered');
       turnLightOn();
       SpeechRecognition.stopListening();
-    } else if (transcript === 'turn off light') {
+    } else if (transcript === 'turn off light'||transcript === 'turn light off') {
       console.log('light off registered');
       turnLightOff();
       SpeechRecognition.stopListening();
@@ -134,20 +134,22 @@ useEffect(() => {
     <div className='flex flex-col justify-center items-center'>
       {listening ? (
         <>
-          <div className='flex justify-center flex-col items-center mt-40'>
+          <div className='flex justify-center flex-col items-center mt-24'>
             <AudioVisualizer/>
           </div>
-          <div className='h-16 mt-0'>{showTranscript && <div className='text-white font-light text-xl'>{transcript}</div>}</div>
+          <div className='h-16 mt-0'>{showTranscript && <div className='text-texx font-light text-xl'>{transcript}</div>}</div>
         </>
       ) : (
-        <div
+        <div>
+          <div
           onClick={handleMicClick}
-          className='flex justify-center flex-col items-center mt-40  mb-24 w-44 p-2 border rounded-full border-none bg-micg ml-auto mr-auto'
+          className='flex justify-center flex-col items-center mt-24  mb-10 w-36 h-36 p-2 border rounded-full border-none bg-micg ml-auto mr-auto'
         >
-          <img className='w-44' src={micLogo} alt='Microphone' />
+          <img className='w-12' src={micLogo} alt='Microphone' />
         </div>
+      <div  className='text-texx font-light text-5xl mb-10'>Click here to Record</div></div>
       )}
-      <div className='text-white font-light text-5xl'>
+      <div className='text-texx font-light text-3xl'>
         Light Status: {lightStatus ? 'On' : 'Off'}
       </div>
     </div>

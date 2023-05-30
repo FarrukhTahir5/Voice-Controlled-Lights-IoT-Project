@@ -4,10 +4,10 @@
     
     > div {
       display: inline-block;
-      width: 3px;
+      width: 5px;
       height: 200px;
       margin: 0 7px;
-      background: white;
+      background: #8985FA;
       transform: scaleY( .5 );
       opacity: .25;
     }
