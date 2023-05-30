@@ -42,7 +42,7 @@ const turnLightOff = () => {
 
 const Dictaphone = () => {
   const [showAsd, setShowAsd] = useState(false);
-  const [audioData, setAudioData] = useState(null);
+  
   const [showTranscript, setShowTranscript] = useState(false);
   const [transcriptTimer, setTranscriptTimer] = useState(null);
   const [lightStatus, setLightStatus] = useState(false);
@@ -113,7 +113,7 @@ useEffect(() => {
 
         const draw = () => {
           analyserNode.getByteTimeDomainData(dataArray);
-          setAudioData([...dataArray]);
+          
 
           if (showAsd && listening) {
             requestAnimationFrame(draw);
