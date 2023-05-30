@@ -54,11 +54,11 @@ const Dictaphone = () => {
   } = useSpeechRecognition();
 
   useEffect(() => {
-    if (transcript === 'turn on light'||transcript === 'turn light on') {
+    if (transcript === 'turn off light'||transcript === 'turn light off'||transcript === 'light off'||transcript === 'of'||transcript === 'turn off') {
       console.log('light on registered');
       turnLightOn();
       SpeechRecognition.stopListening();
-    } else if (transcript === 'turn off light'||transcript === 'turn light off') {
+    } else if (transcript === 'turn on light'||transcript === 'turn light on'||transcript === 'light on'||transcript === 'on'||transcript === 'turn on') {
       console.log('light off registered');
       turnLightOff();
       SpeechRecognition.stopListening();
@@ -150,7 +150,7 @@ useEffect(() => {
       <div  className='text-texx font-light text-5xl mb-10'>Click here to Record</div></div>
       )}
       <div className='text-texx font-light text-3xl'>
-        Light Status: {lightStatus ? 'On' : 'Off'}
+        Light Status: {lightStatus ? 'Off' : 'On'}
       </div>
     </div>
   );
