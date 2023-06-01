@@ -7,8 +7,8 @@ const char* apSSID = "WemosAP";
 const char* apPassword = "";
 
 // Constants for Firebase
-const char* firebaseHost = "iotproject101-5209a-default-rtdb.firebaseio.com";
-const char* firebaseAuth = "uiJtqLnjsRd5KvhO3FibtSQfDmzUt99EeXvRLPea";
+const char* firebaseHost = "FIREBASEHOST";
+const char* firebaseAuth = "FIREBASEAUTH";
 
 // Create an instance of the web server
 ESP8266WebServer server(80);
